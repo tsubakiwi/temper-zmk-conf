@@ -1,6 +1,6 @@
-// Settings tuned for 1920 x 1080 display resolution
+// Settings tuned for 2560 x 1440 display resolution
 #define ZMK_POINTING_DEFAULT_MOVE_VAL 600 // 600
-#define ZMK_POINTING_DEFAULT_SCRL_VAL 10  // 10
+#define ZMK_POINTING_DEFAULT_SCRL_VAL 20  // 10
 
 #include <dt-bindings/zmk/pointing.h>
 #include <input/processors.dtsi>
