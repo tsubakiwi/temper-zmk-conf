@@ -1,4 +1,4 @@
-#define HOST_OS 1
+#define HOST_OS 1 // Linux
 #include "zmk-helpers/key-labels/36.h"
 
 #include <behaviors.dtsi>
