@@ -10,7 +10,6 @@
 #define SYM 3
 #define FUN 4
 #define SYS 5
-#define MOUSE 6
 
 #define XXX &none
 #define ___ &trans
@@ -91,6 +90,30 @@
     };
   };
 
+  macros {
+    trigrave: trigrave {
+      compatible = "zmk,behavior-macro";
+      #binding-cells = <0>;
+      // wait-ms = <1>;
+      bindings = <&macro_tap &kp GRAVE &kp GRAVE &kp GRAVE>;
+    };
+    lrpar: lrpar {
+      compatible = "zmk,behavior-macro";
+      #binding-cells = <0>;
+      bindings = <&macro_tap &kp LPAR &kp RPAR>;
+    };
+    lrbrc: lrbrc {
+      compatible = "zmk,behavior-macro";
+      #binding-cells = <0>;
+      bindings = <&macro_tap &kp LBRC &kp RBRC>;
+    };
+    lrbkt: lrbkt {
+      compatible = "zmk,behavior-macro";
+      #binding-cells = <0>;
+      bindings = <&macro_tap &kp LBKT &kp RBKT>;
+    };
+  };
+
   combos {
     compatible = "zmk,combos";
     combo_sys {
@@ -118,16 +141,31 @@
       key-positions = <LT2 LT1>;
       bindings = <&kp Z>;
     };
-    // combo_pipe {
+    // combo_colon {
     //   timeout-ms = <COMBO_TERM>;
-    //   key-positions = <LT1 LM1>;
-    //   bindings = <&kp PIPE>;
+    //   key-positions = <RM1 RM2>;
+    //   bindings = <&kp COLON>;
     // };
-    // combo_amps {
+    // combo_under {
     //   timeout-ms = <COMBO_TERM>;
-    //   key-positions = <LT2 LM2>;
-    //   bindings = <&kp AMPS>;
+    //   key-positions = <RT2 RT3>;
+    //   bindings = <&kp UNDER>;
     // };
+    combo_lrpar {
+      timeout-ms = <COMBO_TERM>;
+      key-positions = <LT3 LM3>;
+      bindings = <&lrpar>;
+    };
+    combo_lrbrc {
+      timeout-ms = <COMBO_TERM>;
+      key-positions = <LT2 LM2>;
+      bindings = <&lrbrc>;
+    };
+    combo_lrbrk {
+      timeout-ms = <COMBO_TERM>;
+      key-positions = <LT1 LM1>;
+      bindings = <&lrbkt>;
+    };
     // combo_excl {
     //   timeout-ms = <COMBO_TERM>;
     //   key-positions = <RT1 RM1>;
@@ -153,6 +191,11 @@
       key-positions = <LB2 LB1>;
       bindings = <&kp LS(INS)>;
     };
+    combo_del {
+      timeout-ms = <COMBO_TERM>;
+      key-positions = <LT4 LT3>;
+      bindings = <&kp DEL>;
+    };
     combo_selall {
       timeout-ms = <COMBO_TERM>;
       key-positions = <LB2 LB1>;
@@ -170,16 +213,6 @@
     };
   };
 
-  macros {
-    trigrave: trigrave {
-      compatible = "zmk,behavior-macro";
-      #binding-cells = <0>;
-      wait-ms = <1>;
-      bindings = <&macro_tap &kp GRAVE &kp GRAVE &kp GRAVE>;
-    };
-  };
-
-
   keymap {
     compatible = "zmk,keymap";
     default_layer {
@@ -191,7 +224,7 @@
         // ├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤   ├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤
                 &kp V         &kp W         &kp G         &kp M         &kp J           &kp MINUS      &kp DOT      &kp APOS     &kp EQUAL     &kp SLASH
         // ╰─────────────┴─────────────┼─────────────┼─────────────┼─────────────┤   ├─────────────┼─────────────┼─────────────┼─────────────┴─────────────╯
-                                        &mt LGUI ESC   &lt NAV R   &lt MOUSE TAB      &mt LSHIFT RET &lt NUM SPACE   &kp BSPC
+                                        &mt LGUI ESC   &lt NAV R  &mt LSHIFT TAB      &mt RSHIFT RET &lt NUM SPACE   &kp BSPC
         //                             ╰─────────────┴─────────────┴─────────────╯   ╰─────────────┴─────────────┴─────────────╯
       >;
     };
@@ -205,7 +238,7 @@
         // ├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤   ├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤
                  XXX           XXX           XXX           XXX           XXX               XXX        &kp DOT          XXX           XXX           XXX
         // ╰─────────────┴─────────────┼─────────────┼─────────────┼─────────────┤   ├─────────────┼─────────────┼─────────────┼─────────────┴─────────────╯
-                                             XXX           XXX           XXX               XXX        &kp SPACE        XXX
+                                             XXX           XXX           XXX            &kp RET     &kp SPACE        &kp BSPC
         //                             ╰─────────────┴─────────────┴─────────────╯   ╰─────────────┴─────────────┴─────────────╯
       >;
     };
@@ -215,11 +248,11 @@
         // ╭─────────────┬─────────────┬─────────────┬─────────────┬─────────────╮   ╭─────────────┬─────────────┬─────────────┬─────────────┬─────────────╮
                  XXX         &kp N4        &kp N5        &kp N6         &kp X              XXX        &kp LPAR      &kp STAR      &kp RPAR         XXX
         // ├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤   ├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤
-               &kp N0        &kp N1        &kp N2        &kp N3          XXX               XXX        &kp SPACE      &kp DOWN      &kp UP          XXX
+               &kp N0        &kp N1        &kp N2        &kp N3          XXX               XXX        &kp SPACE     &kp DOWN      &kp UP          XXX
         // ├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤   ├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤
                  XXX         &kp N7        &kp N8        &kp N9          XXX               XXX        &kp DOT          XXX        &kp PLUS      &kp SLASH
         // ╰─────────────┴─────────────┼─────────────┼─────────────┼─────────────┤   ├─────────────┼─────────────┼─────────────┼─────────────┴─────────────╯
-                                           &kp ESC       &kp N0        &kp TAB             XXX           XXX           XXX
+                                           &kp ESC       &kp N0        &kp TAB           &kp RET      &kp SPACE     &kp BSPC
         //                             ╰─────────────┴─────────────┴─────────────╯   ╰─────────────┴─────────────┴─────────────╯
       >;
     };
@@ -227,13 +260,13 @@
     sym_layer {
       bindings = <
         // ╭─────────────┬─────────────┬─────────────┬─────────────┬─────────────╮   ╭─────────────┬─────────────┬─────────────┬─────────────┬─────────────╮
-              &kp GRAVE     &kp RPAR      &kp RBRC      &kp RBKT      &kp AT            &kp COLON     &kp EXCL      &kp STAR      &kp AMPS      &trigrave
+              &kp GRAVE      &kp RPAR      &kp RBRC     &kp RBKT       &kp AT           &kp COLON     &kp EXCL      &kp STAR      &kp AMPS      &trigrave
         // ├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤   ├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤
               &kp TILDE     &kp LPAR      &kp LBRC      &kp LBKT      &kp BSLH          &kp LT       &kp CARET      &kp HASH      &kp PRCNT    &kp DOLLAR
         // ├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤   ├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤
-              &kp SLASH        XXX        &kp DQT       &kp LT        &kp PIPE          &kp UNDER     &kp GT           XXX        &kp PLUS         XXX
+              &kp SLASH        XXX           XXX           XXX        &kp PIPE          &kp UNDER     &kp GT        &kp DQT       &kp PLUS     &kp QMARK
         // ╰─────────────┴─────────────┼─────────────┼─────────────┼─────────────┤   ├─────────────┼─────────────┼─────────────┼─────────────┴─────────────╯
-                                           &kp ESC      &kp SEMI        &kp TAB        &kp LS(RET)    &kp SPACE      &kp BSPC
+                                             XXX           XXX           XXX             &kp RET     &kp SPACE     &kp BSPC
         //                             ╰─────────────┴─────────────┴─────────────╯   ╰─────────────┴─────────────┴─────────────╯
       >;
     };
@@ -241,13 +274,13 @@
     fun_layer {
       bindings = <
         // ╭─────────────┬─────────────┬─────────────┬─────────────┬─────────────╮   ╭─────────────┬─────────────┬─────────────┬─────────────┬─────────────╮
-              &kp F11       &kp F4        &kp F5        &kp F6          XXX               XXX           XXX           XXX           XXX       &kp PSCRN
+               &kp F11       &kp F4        &kp F5        &kp F6          XXX               XXX           XXX           XXX           XXX       &kp PSCRN
         // ├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤   ├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤
-              &kp F10       &kp F1        &kp F2        &kp F3          XXX               XXX      &kp C_PREV  &kp C_VOL_DN   &kp C_VOL_UP    &kp C_NEXT
+               &kp F10       &kp F1        &kp F2        &kp F3          XXX               XXX      &kp C_PREV  &kp C_VOL_DN   &kp C_VOL_UP    &kp C_NEXT
         // ├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤   ├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤
-              &kp F12       &kp F7        &kp F8        &kp F9          XXX               XXX       &kp  C_PP     &kp C_MUTE         XXX         XXX
+               &kp F12       &kp F7        &kp F8        &kp F9          XXX               XXX       &kp  C_PP     &kp C_MUTE         XXX         XXX
         // ╰─────────────┴─────────────┼─────────────┼─────────────┼─────────────┤   ├─────────────┼─────────────┼─────────────┼─────────────┴─────────────╯
-                                            XXX           XXX           XXX               XXX           XXX           XXX
+                                             XXX           XXX           XXX               XXX           XXX           XXX
         //                             ╰─────────────┴─────────────┴─────────────╯   ╰─────────────┴─────────────┴─────────────╯
       >;
     };
@@ -259,7 +292,7 @@
         // ├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤   ├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤
                  XXX          XXX           XXX            XXX       &bootloader       &bootloader       XXX           XXX           XXX           XXX
         // ├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤   ├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤
-                  XXX          XXX           XXX           XXX       &sys_reset        &sys_reset        XXX           XXX           XXX           XXX
+                 XXX          XXX           XXX            XXX       &sys_reset        &sys_reset        XXX           XXX           XXX           XXX
         // ╰─────────────┴─────────────┼─────────────┼─────────────┼─────────────┤   ├─────────────┼─────────────┼─────────────┼─────────────┴─────────────╯
                                             XXX            XXX           XXX               XXX           XXX           XXX
         //                             ╰─────────────┴─────────────┴─────────────╯   ╰─────────────┴─────────────┴─────────────╯
